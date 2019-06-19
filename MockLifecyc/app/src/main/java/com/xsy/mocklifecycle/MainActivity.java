@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import com.xsy.mocklifecycle.lifecycle.LifecycleCustom;
-import com.xsy.mocklifecycle.lifecycle.LifecycleOwerCustom;
+import com.xsy.annotation.lifecycle.LifecycleCustom;
+import com.xsy.annotation.lifecycle.LifecycleOwerCustom;
+
 
 public class MainActivity extends AppCompatActivity implements LifecycleOwerCustom {
 

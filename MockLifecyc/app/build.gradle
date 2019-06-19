@@ -9,6 +9,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
+
     }
     buildTypes {
         release {
@@ -47,7 +52,8 @@ android {
         maxProcessCount 8
         // Instead of setting the heap size for the DEX process, increase Gradle's
         // heap size to enable dex-in-process. To learm more, read the next section.
-        javaMaxHeapSize "2048m"
+        javaMaxHeapSize "4g"
+        dexInProcess true
     }
     aaptOptions {
         cruncherEnabled false
@@ -57,7 +63,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    annotationProcessor project(':annotation_compiler')
+    implementation project(path: ':annotation_compiler')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -66,64 +74,64 @@ dependencies {
 //def runtime_config_file = 'assets/runtime_config'
 
 
-/*
-我们在 gradle 解析完整个任务之后，找到对应的 Task，然后在里边添加一个 doFirst Action 这样能确保编译开始的时候，我们就把 runtime_config 文件准备好了。
-注意，必须在 afterEvaluate 里边才能做，否则 gradle 没有建立完任务有向图，你是找不到 什么 preDebugBuild 之类的任务的
-*/
-project.afterEvaluate {
-//找到 preDebugBuild 任务，然后添加一个 Action
-    tasks.getByName("preDebugBuild") {
-        it.doLast {
-            println "generate debug configuration for ${project.name}"
-//            def configFile = new File(runtime_config_file)
-//            configFile.withOutputStream { os ->
-//                os << 'I am Debug\n' //往配置文件里写 I am Debug
-//            }
-        }
-
-    }
-    tasks.findByName("assembleDebug").doLast {
-        println 'hook afterEvaluate from assHook'
-    }
-
-    //找到 preReleaseBuild 任务
-    tasks.getByName("preReleaseBuild") {
-        it.doFirst {
-            println "generate release configuration for ${project.name}"
-        }
-    }
-
-    tasks.getByName("assemble") {
-
-        it.doLast {
-            println "$project.name: After assemble, jar libs are copied to local repository"
-            project.ext.versionName = android.defaultConfig.versionName
-            println "\t versionName = $versionName"
-        }
-    }
-}
-
-
-task a {
-
-}
-
-task testBoth {
-    // 依赖 a task 先执行
-    dependsOn("a")
-    println '我会在 Configuration 和 Execution 阶段都会执行'
-    doFirst {
-        println '我仅会在 testBoth 的 Execution 阶段执行'
-    }
-    doLast {
-        println '我仅会在 testBoth 的 Execution 阶段执行'
-    }
-}
-
-
-task myTask {
-    println ' I am myTask'
-}
+///*
+//我们在 gradle 解析完整个任务之后，找到对应的 Task，然后在里边添加一个 doFirst Action 这样能确保编译开始的时候，我们就把 runtime_config 文件准备好了。
+//注意，必须在 afterEvaluate 里边才能做，否则 gradle 没有建立完任务有向图，你是找不到 什么 preDebugBuild 之类的任务的
+//*/
+//project.afterEvaluate {
+////找到 preDebugBuild 任务，然后添加一个 Action
+//    tasks.getByName("preDebugBuild") {
+//        it.doLast {
+//            println "generate debug configuration for ${project.name}"
+////            def configFile = new File(runtime_config_file)
+////            configFile.withOutputStream { os ->
+////                os << 'I am Debug\n' //往配置文件里写 I am Debug
+////            }
+//        }
+//
+//    }
+//    tasks.findByName("assembleDebug").doLast {
+//        println 'hook afterEvaluate from assHook'
+//    }
+//
+//    //找到 preReleaseBuild 任务
+//    tasks.getByName("preReleaseBuild") {
+//        it.doFirst {
+//            println "generate release configuration for ${project.name}"
+//        }
+//    }
+//
+//    tasks.getByName("assemble") {
+//
+//        it.doLast {
+//            println "$project.name: After assemble, jar libs are copied to local repository"
+//            project.ext.versionName = android.defaultConfig.versionName
+//            println "\t versionName = $versionName"
+//        }
+//    }
+//}
+//
+//
+//task a {
+//
+//}
+//
+//task testBoth {
+//    // 依赖 a task 先执行
+//    dependsOn("a")
+//    println '我会在 Configuration 和 Execution 阶段都会执行'
+//    doFirst {
+//        println '我仅会在 testBoth 的 Execution 阶段执行'
+//    }
+//    doLast {
+//        println '我仅会在 testBoth 的 Execution 阶段执行'
+//    }
+//}
+//
+//
+//task myTask {
+//    println ' I am myTask'
+//}
 
 
 

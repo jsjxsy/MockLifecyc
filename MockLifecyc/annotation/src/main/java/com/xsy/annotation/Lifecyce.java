@@ -1,4 +1,4 @@
-package com.xsy.mocklifecycle.annotation;
+package com.xsy.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

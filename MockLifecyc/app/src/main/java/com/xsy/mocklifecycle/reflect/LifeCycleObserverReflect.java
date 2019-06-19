@@ -1,7 +1,8 @@
 package com.xsy.mocklifecycle.reflect;
 
-import com.xsy.mocklifecycle.annotation.Lifecyce;
-import com.xsy.mocklifecycle.lifecycle.LifecycleCustom;
+
+import com.xsy.annotation.Lifecyce;
+import com.xsy.annotation.lifecycle.LifecycleCustom;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

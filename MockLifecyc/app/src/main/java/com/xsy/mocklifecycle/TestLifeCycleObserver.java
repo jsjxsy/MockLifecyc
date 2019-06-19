@@ -2,8 +2,9 @@ package com.xsy.mocklifecycle;
 
 import android.util.Log;
 
-import com.xsy.mocklifecycle.annotation.Lifecyce;
-import com.xsy.mocklifecycle.lifecycle.LifecycleCustom;
+import com.xsy.annotation.Lifecyce;
+import com.xsy.annotation.lifecycle.LifecycleCustom;
+
 
 /**
  * @author xiaosy

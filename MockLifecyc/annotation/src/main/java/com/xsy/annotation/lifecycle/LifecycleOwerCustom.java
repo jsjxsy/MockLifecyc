@@ -1,4 +1,4 @@
-package com.xsy.mocklifecycle.lifecycle;
+package com.xsy.annotation.lifecycle;
 
 /**
  * @author xiaosy

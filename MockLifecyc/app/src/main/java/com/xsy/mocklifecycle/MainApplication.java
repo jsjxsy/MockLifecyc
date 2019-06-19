@@ -3,9 +3,10 @@ package com.xsy.mocklifecycle;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.os.Handler;
 
-import com.xsy.mocklifecycle.lifecycle.LifecycleCustom;
-import com.xsy.mocklifecycle.lifecycle.LifecycleOwerCustom;
+import com.xsy.annotation.lifecycle.LifecycleCustom;
+import com.xsy.annotation.lifecycle.LifecycleOwerCustom;
 import com.xsy.mocklifecycle.reflect.LifeCycleObserverReflect;
 
 /**
@@ -15,6 +16,7 @@ import com.xsy.mocklifecycle.reflect.LifeCycleObserverReflect;
  **/
 public class MainApplication extends Application {
 
+    Handler handler = new Handler();
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,7 +28,7 @@ public class MainApplication extends Application {
                         if(lifecycleCustom != null){
                             LifeCycleObserverReflect.test(lifecycleCustom, LifecycleCustom.ON_CREATE);
                         }
-
+                        handler.sendEmptyMessage(LifecycleCustom.ON_CREATE_MESSAGE);
                     }
             }
 
@@ -43,6 +45,7 @@ public class MainApplication extends Application {
                         LifeCycleObserverReflect.test(lifecycleCustom,LifecycleCustom.ON_RESUME);
                     }
 
+                    handler.sendEmptyMessage(LifecycleCustom.ON_RESUME_MESSAGE);
                 }
             }
 
@@ -53,7 +56,7 @@ public class MainApplication extends Application {
 
             @Override
             public void onActivityStopped(Activity activity) {
-
+                handler.sendEmptyMessage(LifecycleCustom.ON_STOP_MESSAGE);
             }
 
             @Override
